@@ -1,0 +1,13 @@
+plugin: gcp_compute
+zones: # populate inventory with instances in these regions
+  - us-central1-a
+projects:
+  - google.com:robust-shadow-217601
+filters:
+  - machineType = n1-standard-1
+  - scheduling.automaticRestart = true AND machineType = n1-standard-1
+
+scopes:
+  - https://www.googleapis.com/auth/compute
+service_account_file: ../account.json
+auth_kind: serviceaccount

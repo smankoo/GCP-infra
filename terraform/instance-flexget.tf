@@ -11,14 +11,9 @@ resource "google_compute_instance" "flexget" {
     }
   }
 
-  // Local SSD disk
-  # scratch_disk {
-  # }
-
   attached_disk{
     source = "${google_compute_disk.data.name}"
   }
-
 
   network_interface {
     network = "default"
@@ -28,27 +23,18 @@ resource "google_compute_instance" "flexget" {
     }
   }
 
-  metadata_startup_script = <<EOF
-sudo useradd flexget -aG sudo
-echo -e "${random_string.password.result}\n${random_string.password.result}" | sudo passwd flexget
+  allow_stopping_for_update = "true"
 
-sudo chmod 666 /etc/ssh/sshd_config
+  metadata {
+    enable-oslogin = "true"
+  }
 
-sudo echo "PasswordAuthentication yes
-ChallengeResponseAuthentication no
-UsePAM yes
-X11Forwarding yes
-PrintMotd no
-AcceptEnv LANG LC_*
-Subsystem       sftp    /usr/lib/openssh/sftp-server
-ClientAliveInterval 120
-UseDNS no" > /etc/ssh/sshd_config
+  service_account {
+    email = "sumeet-terraform@robust-shadow-217601.iam.gserviceaccount.com"
+    scopes = ["cloud-platform"]
+  }
 
-sudo chmod 644 /etc/ssh/sshd_config
-
-sudo service sshd reload
-
-EOF
+  # metadata_startup_script = "${file("script_bootstrap_flexget.sh")}"
 
 }
 

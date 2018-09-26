@@ -30,7 +30,7 @@ resource "google_compute_instance" "flexget" {
 
   metadata_startup_script = <<EOF
 sudo useradd flexget -aG sudo
-echo -e "Sumeet@123\nSumeet@123" | sudo passwd flexget
+echo -e "${random_string.password.result}\n${random_string.password.result}" | sudo passwd flexget
 
 sudo chmod 666 /etc/ssh/sshd_config
 
@@ -46,6 +46,8 @@ UseDNS no" > /etc/ssh/sshd_config
 
 sudo chmod 644 /etc/ssh/sshd_config
 
+sudo service sshd reload
+
 EOF
 
 }
@@ -55,10 +57,16 @@ resource "google_compute_disk" "data" {
   type  = "pd-standard"
   zone  = "us-central1-a"
   # image = ""
+  size = "20"
 }
+
+resource "random_string" "password" {
+  length = 8
+}
+
 
 # ------------------------
 
-output "IP Address" {
-  value = "${google_compute_instance.flexget.network_interface.0.access_config.0.nat_ip}"
-}
+output "IP Address" { value = "${google_compute_instance.flexget.network_interface.0.access_config.0.nat_ip}" }
+output "UserName" { value = "flexget" }
+output "Password" { value = "${random_string.password.result}" }

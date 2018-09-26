@@ -68,7 +68,7 @@ sudo apt-get update
 sudo apt-get install software-properties-common -y
 sudo apt-add-repository ppa:ansible/ansible -y
 sudo apt-get update
-apt-get install ansible python python-pip -y
+apt-get install ansible python python-pip unzip -y
 pip install requests google-auth
 
 echo "

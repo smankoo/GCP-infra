@@ -1,3 +1,5 @@
+*.box
+
 *-console.log
 
 # OS-specific

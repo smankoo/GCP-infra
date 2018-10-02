@@ -1,5 +1,5 @@
-resource "google_compute_instance" "flexget" {
-  name         = "flexget"
+resource "google_compute_instance" "test" {
+  name         = "test"
   machine_type = "f1-micro"
   zone         = "us-central1-a"
 
@@ -34,7 +34,7 @@ resource "google_compute_instance" "flexget" {
     scopes = ["cloud-platform"]
   }
 
-  # metadata_startup_script = "${file("script_bootstrap_flexget.sh")}"
+  metadata_startup_script = "${file("script_bootstrap.sh")}"
 
 }
 
@@ -53,6 +53,6 @@ resource "random_string" "password" {
 
 # ------------------------
 
-output "IP Address" { value = "${google_compute_instance.flexget.network_interface.0.access_config.0.nat_ip}" }
-output "UserName" { value = "flexget" }
-output "Password" { value = "${random_string.password.result}" }
+output "IP Address" { value = "${google_compute_instance.test.network_interface.0.access_config.0.nat_ip}" }
+output "UserName" { value = "${var.gcp_username}" }
+

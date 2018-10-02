@@ -6,3 +6,5 @@ account.json
 
 hosts
 *.box
+*.pub
+*.pem

@@ -36,6 +36,10 @@ resource "google_compute_instance" "test" {
 
   # metadata_startup_script = "${file("script_bootstrap.sh")}"
 
+  metadata {
+      ssh-keys = "${var.gcp_username}:${var.gcp_privatekey}"
+  }
+
 }
 
 resource "google_compute_disk" "data" {
@@ -46,9 +50,9 @@ resource "google_compute_disk" "data" {
   size = "20"
 }
 
-resource "random_string" "password" {
-  length = 8
-}
+# resource "random_string" "password" {
+#   length = 8
+# }
 
 
 # ------------------------

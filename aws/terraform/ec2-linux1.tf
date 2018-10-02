@@ -7,7 +7,7 @@ resource "aws_instance" "linux1" {
   availability_zone         = "${var.default_az}"
   key_name 		            = "${var.default_key}"
 
-  private_ip        = "11.0.1.20"
+  #private_ip        = "11.0.1.20"
 
   tags {
     Name = "linux1"

@@ -6,16 +6,16 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
+  config.vm.box = "smankoo/centos7-vbga"
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "smankoo/gcpctl"
-
-  config.vm.synced_folder "../.", "/gcp"
   config.vm.provider "virtualbox" do |vb|
      vb.memory = "1024"
   end
+
+  config.vm.synced_folder "../.", "/gcp", mount_options: ["dmode=775,fmode=777"]
+
+  config.vm.provision "shell", path: "provision_install_ansible_pip.sh"
+  config.vm.provision "shell", path: "provision_install_pip_modules.sh"
+  config.vm.provision "shell", path: "provision_install_terraform.sh"
+
 end

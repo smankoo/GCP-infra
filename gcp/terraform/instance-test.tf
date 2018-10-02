@@ -34,7 +34,7 @@ resource "google_compute_instance" "test" {
     scopes = ["cloud-platform"]
   }
 
-  metadata_startup_script = "${file("script_bootstrap.sh")}"
+  # metadata_startup_script = "${file("script_bootstrap.sh")}"
 
 }
 

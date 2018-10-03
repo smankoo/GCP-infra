@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder "../gcp", "/gcp", mount_options: ["dmode=775,fmode=777"]
   config.vm.synced_folder "../aws", "/aws", mount_options: ["dmode=775,fmode=777"]
+  config.vm.synced_folder "../local", "/local", mount_options: ["dmode=775,fmode=777"]
 
   config.vm.provision "shell", path: "provision_install_ansible_pip.sh"
   config.vm.provision "shell", path: "provision_install_pip_modules.sh"

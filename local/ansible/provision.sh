@@ -1,0 +1,1 @@
+ansible pi -m ping -i /local/hosts

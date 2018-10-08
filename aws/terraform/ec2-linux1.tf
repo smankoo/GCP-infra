@@ -1,16 +1,12 @@
 data "aws_ami" "linux_ami" {
   most_recent      = true
-  executable_users = ["self"]
-
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
 
   filter {
     name   = "name"
-    values = ["Amazon Linux*"]
+    values = ["amzn2-ami-hvm-2.0.????????-x86_64-gp2"]
   }
+
+  owners     = ["amazon"]
 
 }
 

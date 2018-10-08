@@ -10,13 +10,23 @@ resource "aws_vpc" "main" {
   }
 }
 
-
+data "aws_availability_zones" "available" {}
 # Subnets
 
-resource "aws_subnet" "main" {
+resource "aws_subnet" "primary" {
   vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.subnet1_cidr}"
-  availability_zone = "us-east-1a"
+  cidr_block = "${cidrsubnet(aws_vpc.main.cidr_block,8,1)}"
+  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  map_public_ip_on_launch = "true"
+
+  tags {
+    Name = "main"
+  }
+}
+resource "aws_subnet" "secondary" {
+  vpc_id     = "${aws_vpc.main.id}"
+  cidr_block = "${cidrsubnet(aws_vpc.main.cidr_block,8,2)}"
+  availability_zone = "${data.aws_availability_zones.available.names[1]}"
   map_public_ip_on_launch = "true"
 
   tags {
@@ -50,7 +60,7 @@ resource "aws_route_table" "main" {
 }
 
 resource "aws_route_table_association" "a" {
-  subnet_id      = "${aws_subnet.main.id}"
+  subnet_id      = "${aws_subnet.primary.id}"
   route_table_id = "${aws_route_table.main.id}"
 }
 

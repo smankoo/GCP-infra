@@ -8,10 +8,6 @@ variable "default_windows_ami_id" {}
 
 variable "default_key" {}
 
-variable "default_az" {
-  default = "us-east-1a"
-}
-
 variable "domain_name" {
   default = "SINGH.local"
 }
@@ -21,5 +17,7 @@ variable "domain_user" {
 
 variable "domain_pass"{}
 
-variable "vpc_cidr" {}
-variable "subnet1_cidr" {}
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+}
+

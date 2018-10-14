@@ -1,13 +1,13 @@
-resource "google_compute_instance" "test" {
-  name         = "test"
-  machine_type = "f1-micro"
+resource "google_compute_instance" "db-instance-2" {
+  name         = "db-instance-2"
+  machine_type = "n1-standard-2"
   zone         = "us-central1-a"
 
 #   tags = ["foo", "bar"]
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      image = "centos-6-v20180911"
     }
   }
 
@@ -37,7 +37,7 @@ resource "google_compute_instance" "test" {
   # metadata_startup_script = "${file("script_bootstrap.sh")}"
 
   metadata {
-      ssh-keys = "${var.gcp_username}:${var.gcp_privatekey}"
+      ssh-keys = "${var.gcp_username}:${var.gcp_publickey}"
   }
 
 }
@@ -47,7 +47,7 @@ resource "google_compute_disk" "data" {
   type  = "pd-standard"
   zone  = "us-central1-a"
   # image = ""
-  size = "20"
+  size = "200"
 }
 
 # resource "random_string" "password" {
@@ -57,6 +57,6 @@ resource "google_compute_disk" "data" {
 
 # ------------------------
 
-output "IP Address" { value = "${google_compute_instance.test.network_interface.0.access_config.0.nat_ip}" }
+output "IP Address" { value = "${google_compute_instance.db-instance-2.network_interface.0.access_config.0.nat_ip}" }
 output "UserName" { value = "${var.gcp_username}" }
 
